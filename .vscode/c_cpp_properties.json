@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "AVR-ATMEGA16A",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "__AVR_ATmega16A__"
+            ],
+            "compilerPath": "/usr/bin/avr-gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "gcc-x86",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}
