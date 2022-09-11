@@ -6,10 +6,6 @@ set(PROG_TYPE usbasp)
 
 
 # Variables regarding the AVR chip
-set(MCU   atmega16a)
-set(F_CPU 8000000)
-set(BAUD  9600)
-set(AVR_PART m16)
 add_definitions(-DF_CPU=${F_CPU})
 
 

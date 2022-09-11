@@ -1,0 +1,9 @@
+{
+    "cmake.configureSettings": {
+        "MCU": "atmega16a",
+        "F_CPU": "8000000",
+        "BAUD": "9600",
+        "AVR_PART": "m16"
+    },
+    "cmake.configureOnOpen": false
+}
