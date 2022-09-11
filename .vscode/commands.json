@@ -1,0 +1,10 @@
+{
+  "commands": [
+    {
+      "command": "workbench.action.tasks.build",
+      "text": "Build & Flash",
+      "tooltip": "Build the project & flash To uc",
+      "color": "#FFCC00"
+    }
+  ]
+}
