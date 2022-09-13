@@ -1,7 +1,3 @@
-#ifndef F_CPU
-#define F_CPU 8000000UL // or whatever may be your frequency
-#endif
-
 #include <avr/io.h>                    // adding header files
 #include <util/delay.h>                // for _delay_ms()
 
