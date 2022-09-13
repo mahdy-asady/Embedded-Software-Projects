@@ -1,5 +1,6 @@
 {
     "cmake.configureSettings": {
+        "PROJECT": "timer",
         "MCU": "atmega16a",
         "F_CPU": "8000000",
         "BAUD": "9600",
