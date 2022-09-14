@@ -2,9 +2,13 @@
     "cmake.configureSettings": {
         "PROJECT": "timer",
         "MCU": "atmega16a",
-        "F_CPU": "8000000",
-        "BAUD": "9600",
+        "F_CPU": "16000000",
+        "BAUD": "38400",
         "AVR_PART": "m16"
     },
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "*.c": "c",
+        "*.h": "c"
+    }
 }
