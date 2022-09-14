@@ -1,21 +1,21 @@
 #include<avr/interrupt.h>
 
 static void (*fnCallBack)(void);
-static unsigned int TickCopmrator = 0;
+static unsigned int TickComparator = 0;
 
 
 ISR(TIMER1_COMPA_vect) {
     static unsigned int TickCounter = 0;
 
     TCNT1 = 0;
-    if(TickCounter++ == TickCopmrator) {
+    if(TickCounter++ == TickComparator) {
         TickCounter = 0;
         (*fnCallBack)();
     }
 }
 
 void EnableTimer1(void (*CallBack)(void), unsigned int IntervalInMSec) {
-    TickCopmrator = IntervalInMSec;
+    TickComparator = IntervalInMSec;
     fnCallBack = CallBack;
 
     //create 1miliseconds friction of time comprator value
