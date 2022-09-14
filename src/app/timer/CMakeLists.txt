@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Project setup
-add_executable(${PROJECT_NAME} "../../peripheral/USART.c" main.c)
+add_executable(${PROJECT_NAME} "../../peripheral/USART.c" "../../peripheral/TIMER.c" main.c)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}.elf")
 
