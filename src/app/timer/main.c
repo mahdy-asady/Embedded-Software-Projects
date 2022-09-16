@@ -13,7 +13,8 @@ int main(void)
 {
     USART_init_printf();
 
-    EnableTimer1(timer1_tick, 1000);
+    if(!EnableTimer1(timer1_tick, 1000))
+        printf("Timer Error!\n");
     
     while(1);
 }

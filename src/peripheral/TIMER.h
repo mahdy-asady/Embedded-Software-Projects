@@ -3,7 +3,12 @@
 
 /*
     Creates a timer hook based on requested time in mili Seconds
+    Return:
+        - true: timer set successfully
+        - false: Error in Setting timer, mostly because the range user specified exceeded the acceptable range
 */
-void EnableTimer1(void (*CallBack)(void), unsigned int IntervalInMSec);
+int EnableTimer1(void (*CallBack)(void), unsigned int IntervalInMSec);
+
+void DisableTimer1(void);
 
 #endif
