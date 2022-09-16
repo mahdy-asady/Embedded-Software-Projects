@@ -1,8 +1,8 @@
 #include <avr/io.h>
 #include <stdio.h>
 //#include<avr/interrupt.h>
-#include "../../peripheral/USART.h"
-#include "../../peripheral/TIMER.h"
+#include "USART.h"
+#include "TIMER.h"
 
 void timer1_tick(void) {
     static unsigned int i = 0;

@@ -50,3 +50,5 @@ set(CMAKE_ASM_FLAGS   "${CFLAGS}")
 # Project setup
 set(PROJECT_PATH "src/app/${PROJECT}")
 add_subdirectory(${PROJECT_PATH})
+
+target_include_directories(${PROJECT_NAME} PUBLIC "src/peripheral")
