@@ -1,9 +1,6 @@
 #include <avr/io.h>
 #include <stdio.h>
 
-static int uart_putchar(char c, FILE *stream);
-
-
 static int uart_putchar(char c, FILE *stream)
 {
     if (c == '\n')
