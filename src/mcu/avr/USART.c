@@ -22,7 +22,7 @@ static void USART_init(void) {
         UCSRA &= ~(1 << U2X);
     #endif
     UCSRB = (1 << RXEN) | (1 << TXEN);
-    UCSRC = (1 << URSEL) | (1 << USBS) | (3 << UCSZ0); 
+    UCSRC |= (1 << URSEL) | (3 << UCSZ0); 
 }
 
 static void use_USART_as_stdout(void) {
