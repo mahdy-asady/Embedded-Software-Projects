@@ -1,7 +1,5 @@
-# Embedded Software Project
+# Blink a LED
 Simple Hello World! application on AVR ATmega16.
-This is my first embedded software development experience.
-I decided to document it for further use of anyone who wants to create AVR application in ubuntu using vscode!
 
 ## Hardware Requirements:
 1. ATmega16A
