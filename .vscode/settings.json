@@ -3,7 +3,7 @@
         "PROJECT": "timer",
         "MCU": "atmega16a",
         "F_CPU": "16000000",
-        "BAUD": "38400",
+        "BAUD": "115200",
         "AVR_PART": "m16"
     },
     "cmake.configureOnOpen": false,
