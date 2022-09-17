@@ -19,6 +19,9 @@ Understanding of How uart, timers and interrupts are working and installing exte
 ## Schematic:
 ![Scheme.png](Scheme.png)
 
+**Notes:**
+
+For selecting proper uart speed use [This](https://trolsoft.ru/en/uart-calc) website. I tried **153600** baud but I couldn't communicate through putty. any advice on why and how is appreciated.
 
 ## Running steps:
 Note that I used **Ubuntu** as my OS, so all commands here are Ubuntu commands.
