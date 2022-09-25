@@ -86,7 +86,7 @@ if( MCU STREQUAL "cortex-m3" )
     )
 
     add_custom_target(binary   ALL     ${OBJCOPY} -O binary ${PROJECT_PATH}/${PROJECT_NAME}.elf ${PROJECT_NAME}.bin && ${SIZE} --format=berkeley ${PROJECT_PATH}/${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
-    add_custom_target(flash ALL ${FLASHER} -openprj../JFlash/${PROCESSOR}.jflash -open${PROJECT_NAME}.bin,0x8000000 -auto -startapp -exit DEPENDS binary)
+    add_custom_target(flash ${FLASHER} -openprj../JFlash/${PROCESSOR}.jflash -open${PROJECT_NAME}.bin,0x8000000 -auto -startapp -exit DEPENDS binary)
 
 
     target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32")
@@ -103,7 +103,7 @@ elseif( MCU STREQUAL "m16" )
     add_custom_target(hex   ALL     ${OBJCOPY} -R .eeprom -O ihex "${PROJECT_PATH}/${PROJECT_NAME}.elf" "${PROJECT_NAME}.hex" DEPENDS strip)
     add_custom_target(eeprom        ${OBJCOPY} -j .eeprom --change-section-lma .eeprom=0 -O ihex "${PROJECT_PATH}/${PROJECT_NAME}.elf" "${PROJECT_NAME}.eeprom" DEPENDS strip)
 
-    add_custom_target(flash ALL ${FLASHER} -c usbasp -p ${MCU} -U flash:w:${PROJECT_NAME}.hex DEPENDS hex)
+    add_custom_target(flash ${FLASHER} -c usbasp -p ${MCU} -U flash:w:${PROJECT_NAME}.hex DEPENDS hex)
 
 endif()
 
