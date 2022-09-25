@@ -4,3 +4,6 @@
 void delay_ms(double duration) {
     _delay_ms(duration);
 }
+
+void InitHardWare(void) {
+}

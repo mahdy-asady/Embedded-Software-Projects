@@ -13,13 +13,7 @@ TIM_HandleTypeDef htim1;
 
 int main(void)
 {
-    #ifdef STM32F107xC
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-
-  #endif
-  SystemClock_Config();
+  InitHardWare();
 
   PORTS GPIO_Port;
   PINS GPIO_Pin;
