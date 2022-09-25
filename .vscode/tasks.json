@@ -5,14 +5,27 @@
     "tasks": [
         {
             "type": "cmake",
-            "label": "CMake: build",
+            "label": "CMake: flash",
             "command": "build",
             "targets": [
                 "flash"
             ],
-            "group": "build",
             "problemMatcher": [],
-            "detail": "CMake template build task"
+            "detail": "CMake template clean task"
+        },
+        {
+            "type": "cmake",
+            "label": "CMake: clean rebuild",
+            "command": "cleanRebuild",
+            "targets": [
+                "all"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "CMake template clean rebuild task"
         }
     ]
 }
