@@ -1,10 +1,11 @@
 {
     "cmake.configureSettings": {
-        "PROJECT": "timer",
-        "MCU": "atmega16a",
-        "F_CPU": "16000000",
+        "PROJECT": "blink",
+        "PROFILE": "stm32f107_72MHz",
         "BAUD": "115200",
-        "AVR_PART": "m16"
+        
+        "atmega16a_16MHz": ["atmega16a", "16000000", "m16", "avrdude"],
+        "stm32f107_72MHz": ["STM32F107xC", "72000000", "cortex-m3", "JFlash"]
     },
     "cmake.configureOnOpen": false,
     "files.associations": {
