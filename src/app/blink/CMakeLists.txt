@@ -8,6 +8,7 @@ if( MCU STREQUAL "cortex-m3" )
         ../../mcu/stm32/stm32f1xx_it.c
         ../../mcu/stm32/system_stm32f1xx.c
         ../../mcu/stm32/syscalls.c
+        ../../mcu/stm32/SystemClock.c
 
         ../../mcu/stm32/ErrorHandler.h
         ../../mcu/stm32/stm32f1xx_hal_conf.h
@@ -35,6 +36,7 @@ elseif( MCU STREQUAL "m16" )
 
     set(INC_FILES main.c
         ../../mcu/avr/GPIO.c
+        ../../mcu/avr/SystemClock.c
     )
 
 endif()
