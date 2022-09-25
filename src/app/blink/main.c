@@ -1,10 +1,6 @@
 #include "GPIO.h"
 #include "SystemClock.h"
-
-#ifdef atmega16a
-#include <util/delay.h>                // for _delay_ms()
-#endif
-
+#include "util.h"
 
 /* Includes ------------------------------------------------------------------*/
 #ifdef STM32F107xC
@@ -36,23 +32,11 @@ int main(void)
     GPIO_Pin = PIN_02;
   #endif
   GPIO_InitPin(GPIO_Port, GPIO_Pin, PinDirectionOutput);
-
   GPIO_WritePin(GPIO_Port, GPIO_Pin, PinHigh);
-  #ifdef atmega16a
-    int duration = 500;
-  #elif defined STM32F107xC
-    int duration = 2000000;
-  #endif
-  
   
   while (1)
   {
-    #ifdef atmega16a
-        _delay_ms(duration);
-    #elif defined STM32F107xC
-        for(int i = 0; i< duration; i++);
-    #endif
-    
+    delay_ms(500);
     GPIO_TogglePin(GPIO_Port, GPIO_Pin);
   }
 }
