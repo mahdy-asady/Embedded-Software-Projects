@@ -1,5 +1,4 @@
-#include "ErrorHandler.h"
-
+#include "stm32f1xx_hal.h"
 #include "GPIO.h"
 
 void GPIO_InitPin(PORTS PortNumber, PINS PinNumber, PinDirections PinDirection) {
