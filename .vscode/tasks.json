@@ -4,14 +4,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "MakeAndFlash",
-            "type": "shell",
-            "command": "cd build && make flash",
+            "type": "cmake",
+            "label": "CMake: build",
+            "command": "build",
+            "targets": [
+                "flash"
+            ],
+            "group": "build",
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "detail": "CMake template build task"
         }
     ]
 }
