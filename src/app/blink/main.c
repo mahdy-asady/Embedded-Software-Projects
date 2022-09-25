@@ -1,5 +1,4 @@
 #include "GPIO.h"
-#include "SystemClock.h"
 #include "util.h"
 
 /* Includes ------------------------------------------------------------------*/
