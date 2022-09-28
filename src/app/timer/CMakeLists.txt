@@ -1,15 +1,20 @@
 cmake_minimum_required(VERSION 3.20)
 
 if( MCU STREQUAL "cortex-m3" )
+
     add_definitions(-DHAL_GPIO_MODULE_ENABLED)
+    add_definitions(-DHAL_UART_MODULE_ENABLED)
 
     set(INC_FILES main.c
         ../../mcu/stm32/GPIO.c
         ../../mcu/stm32/stm32f1xx_it.c
+        ../../mcu/stm32/stm32f1xx_hal_msp.c
         ../../mcu/stm32/system_stm32f1xx.c
-        ../../mcu/stm32/syscalls.c
+        ../../mcu/stm32/retarget.c
         ../../mcu/stm32/ErrorHandler.c
         ../../mcu/stm32/util.c
+        ../../mcu/stm32/USART.c
+        ../../mcu/stm32/TIMER.c
 
         ../../mcu/stm32/ErrorHandler.h
         ../../mcu/stm32/stm32f1xx_hal_conf.h
@@ -29,6 +34,7 @@ if( MCU STREQUAL "cortex-m3" )
         ../../mcu/stm32/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c
         ../../mcu/stm32/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
         ../../mcu/stm32/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c
+        ../../mcu/stm32/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
 
         ../../mcu/stm32/startup_stm32f107xc.s
     )
