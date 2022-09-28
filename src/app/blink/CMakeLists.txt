@@ -7,7 +7,7 @@ if( MCU STREQUAL "cortex-m3" )
         ../../mcu/stm32/GPIO.c
         ../../mcu/stm32/stm32f1xx_it.c
         ../../mcu/stm32/system_stm32f1xx.c
-        ../../mcu/stm32/syscalls.c
+        ../../mcu/stm32/retarget.c
         ../../mcu/stm32/ErrorHandler.c
         ../../mcu/stm32/util.c
 

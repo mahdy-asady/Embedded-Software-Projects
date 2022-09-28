@@ -15,6 +15,7 @@
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
+#ifdef HAL_UART_MODULE_ENABLED
 UART_HandleTypeDef *gHuart;
 
 void RetargetInit(UART_HandleTypeDef *huart) {
@@ -24,6 +25,7 @@ void RetargetInit(UART_HandleTypeDef *huart) {
    * chars are sent out as soon as they are printed. */
   setvbuf(stdout, NULL, _IONBF, 0);
 }
+#endif
 
 int _isatty(int fd) {
   if (fd >= STDIN_FILENO && fd <= STDERR_FILENO)
@@ -34,6 +36,7 @@ int _isatty(int fd) {
 }
 
 int _write(int fd, char* ptr, int len) {
+  #ifdef HAL_UART_MODULE_ENABLED
   HAL_StatusTypeDef hstatus;
 
   if (fd == STDOUT_FILENO || fd == STDERR_FILENO) {
@@ -47,6 +50,7 @@ int _write(int fd, char* ptr, int len) {
       return EIO;
   }
   errno = EBADF;
+  #endif
   return -1;
 }
 
@@ -68,6 +72,7 @@ int _lseek(int fd, int ptr, int dir) {
 }
 
 int _read(int fd, char* ptr, int len) {
+  #ifdef HAL_UART_MODULE_ENABLED
   HAL_StatusTypeDef hstatus;
 
   if (fd == STDIN_FILENO) {
@@ -78,6 +83,7 @@ int _read(int fd, char* ptr, int len) {
       return EIO;
   }
   errno = EBADF;
+  #endif
   return -1;
 }
 
