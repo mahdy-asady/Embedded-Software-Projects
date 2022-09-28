@@ -14,7 +14,7 @@ if( MCU STREQUAL "cortex-m3" )
         ../../mcu/stm32/system_stm32f1xx.c
         ../../mcu/stm32/retarget.c
         ../../mcu/stm32/ErrorHandler.c
-        ../../mcu/stm32/util.c
+        ../../mcu/stm32/mcu.c
         ../../mcu/stm32/USART.c
         ../../mcu/stm32/TIMER.c
 
@@ -44,7 +44,7 @@ if( MCU STREQUAL "cortex-m3" )
 elseif( MCU STREQUAL "m16" )
 
     set(INC_FILES main.c
-        ../../mcu/avr/util.c
+        ../../mcu/avr/mcu.c
         ../../mcu/avr/USART.c
         ../../mcu/avr/TIMER.c
     )

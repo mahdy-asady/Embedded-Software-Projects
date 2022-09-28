@@ -1,14 +1,19 @@
 #include "ErrorHandler.h"
+#include "GPIO.h"
 
 static void SystemClock_Config(void);
 
+void getLedInfo(PORTS *Port, PINS *Pin) {
+    *Port = PORT_D;
+    *Pin = PIN_02;
+}
 
 void delay_ms(double duration) {
     HAL_Delay(duration);
 }
 
 
-void InitHardWare(void) {
+void mcuInit(void) {
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
     HAL_Init();
 

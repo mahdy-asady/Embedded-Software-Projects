@@ -70,6 +70,7 @@ add_subdirectory(${PROJECT_PATH})
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}.elf")
 
 target_include_directories(${PROJECT_NAME} PUBLIC "src/peripheral")
+target_include_directories(${PROJECT_NAME} PUBLIC "src/shared")
 
 if( MCU STREQUAL "cortex-m3" )
 

@@ -1,20 +1,13 @@
 #include <stdio.h>
-#include "util.h"
+#include "mcu.h"
 #include "USART.h"
 #include "TIMER.h"
-
-
-#ifdef STM32F107xC
-#include "ErrorHandler.h"
-#endif
-
-
 
 void timer1_tick(void);
 
 int main(void)
 {
-    InitHardWare();
+    mcuInit();
     USART_init_printf();
 
     if(!EnableTimer1(timer1_tick, 1000))
