@@ -21,7 +21,7 @@ if( MCU STREQUAL "cortex-m3" )
     set(CDEBUG    "-Og -g")
     set(CTUNING   "-fno-builtin -ffunction-sections -fdata-sections")
     set(COPT      "-Os -lm")
-    set(CMCU      "-mcpu=${MCU} -mthumb -D${PROCESSOR} -DUSE_HAL_DRIVER")
+    set(CMCU      "-mcpu=${MCU} -mthumb -DUSE_HAL_DRIVER")
 
 elseif( MCU STREQUAL "m16" )
 
