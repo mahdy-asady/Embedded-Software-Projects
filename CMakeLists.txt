@@ -62,6 +62,7 @@ set(CMAKE_ASM_FLAGS   "${CFLAGS}")
 
 project(Embedded C ASM)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build")
 
 # Project setup
 add_subdirectory(${PROJECT_PATH})
@@ -85,7 +86,7 @@ if( MCU STREQUAL "cortex-m3" )
         -Wl,--gc-sections
     )
 
-    add_custom_target(binary   ALL     ${OBJCOPY} -O binary ${PROJECT_PATH}/${PROJECT_NAME}.elf ${PROJECT_NAME}.bin && ${SIZE} --format=berkeley ${PROJECT_PATH}/${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
+    add_custom_target(binary   ALL     ${OBJCOPY} -O binary ${PROJECT_NAME}.elf ${PROJECT_NAME}.bin && ${SIZE} --format=berkeley ${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
     add_custom_target(flash ${FLASHER} -openprj../JFlash/${PROCESSOR}.jflash -open${PROJECT_NAME}.bin,0x8000000 -auto -startapp -exit DEPENDS binary)
 
 
@@ -99,9 +100,9 @@ if( MCU STREQUAL "cortex-m3" )
 elseif( MCU STREQUAL "m16" )
 
     # Compiling targets
-    add_custom_target(strip ALL     ${STRIP} "${PROJECT_PATH}/${PROJECT_NAME}.elf" DEPENDS ${PROJECT_NAME})
-    add_custom_target(hex   ALL     ${OBJCOPY} -R .eeprom -O ihex "${PROJECT_PATH}/${PROJECT_NAME}.elf" "${PROJECT_NAME}.hex" && ${SIZE} --format=berkeley ${PROJECT_PATH}/${PROJECT_NAME}.elf DEPENDS strip)
-    add_custom_target(eeprom        ${OBJCOPY} -j .eeprom --change-section-lma .eeprom=0 -O ihex "${PROJECT_PATH}/${PROJECT_NAME}.elf" "${PROJECT_NAME}.eeprom" DEPENDS strip)
+    add_custom_target(strip ALL     ${STRIP} "${PROJECT_NAME}.elf" DEPENDS ${PROJECT_NAME})
+    add_custom_target(hex   ALL     ${OBJCOPY} -R .eeprom -O ihex "${PROJECT_NAME}.elf" "${PROJECT_NAME}.hex" && ${SIZE} --format=berkeley ${PROJECT_NAME}.elf DEPENDS strip)
+    add_custom_target(eeprom        ${OBJCOPY} -j .eeprom --change-section-lma .eeprom=0 -O ihex "${PROJECT_NAME}.elf" "${PROJECT_NAME}.eeprom" DEPENDS strip)
 
     add_custom_target(flash ${FLASHER} -c usbasp -p ${MCU} -U flash:w:${PROJECT_NAME}.hex DEPENDS hex)
 
