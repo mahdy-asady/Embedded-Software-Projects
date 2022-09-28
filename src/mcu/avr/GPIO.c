@@ -32,18 +32,18 @@ static volatile uint8_t * GetDDR(PORTS PortNumber) {
 
 void GPIO_InitPin(PORTS PortNumber, PINS PinNumber, PinDirections PinDirection) {
     if(PinDirection == PinDirectionOutput)
-        (*GetDDR(PortNumber)) |= (1 << PinNumber);
+        (*GetDDR(PortNumber)) |= PinNumber;
     else
-        (*GetDDR(PortNumber)) &= ~(1 << PinNumber);
+        (*GetDDR(PortNumber)) &= ~PinNumber;
 }
 
 void GPIO_WritePin(PORTS PortNumber, PINS PinNumber, PinValues PinValue) {
     if(PinValue == PinHigh)
-        (*GetPort(PortNumber)) |= 1 << PinNumber; 
+        (*GetPort(PortNumber)) |= PinNumber; 
     else 
-        (*GetPort(PortNumber)) &= ~(1 << PinNumber); 
+        (*GetPort(PortNumber)) &= ~PinNumber;
 }
 
 void GPIO_TogglePin(PORTS PortNumber, PINS PinNumber) {
-    (*GetPort(PortNumber)) ^= (1 << PinNumber);
+    (*GetPort(PortNumber)) ^= PinNumber;
 }
