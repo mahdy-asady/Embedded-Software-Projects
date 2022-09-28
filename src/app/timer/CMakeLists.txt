@@ -4,6 +4,8 @@ if( MCU STREQUAL "cortex-m3" )
 
     add_definitions(-DHAL_GPIO_MODULE_ENABLED)
     add_definitions(-DHAL_UART_MODULE_ENABLED)
+    add_definitions(-DTIM_ENABLED)
+
 
     set(INC_FILES main.c
         ../../mcu/stm32/GPIO.c
