@@ -15,7 +15,7 @@ set(CWARN     "-Wall -Wstrict-prototypes -Wl,--gc-sections -Wl,--relax")
 if( MCU STREQUAL "cortex-m3" )
 
     # Cmake test use nosys.spec for testing arm-none-eabi-gcc
-    set(CMAKE_EXE_LINKER_FLAGS_INIT "--specs=nosys.specs")
+    set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs -specs=nano.specs")
 
     set(PREFIX arm-none-eabi-)
     set(CDEBUG    "-Og -g")
@@ -54,7 +54,7 @@ set(SIZE  ${PREFIX}size)
 set(CMAKE_SYSTEM_NAME  Generic)
 set(CMAKE_CXX_COMPILER ${CPP})
 set(CMAKE_C_COMPILER   ${CC})
-set(CMAKE_ASM_COMPILER   ${CC})
+set(CMAKE_ASM_COMPILER ${CC})
 
 set(CMAKE_C_FLAGS   "${CFLAGS}")
 set(CMAKE_CXX_FLAGS "${CXXFLAGS}")
@@ -77,11 +77,11 @@ if( MCU STREQUAL "cortex-m3" )
         -T../../../../src/mcu/stm32/STM32F107VCTx_FLASH.ld
         -mcpu=cortex-m3
         -mthumb
-        #        -specs=nano.specs
-        -nostdlib
+        #-specs=nano.specs
+        #-nostdlib
         -lc
         -lm
-        -lnosys
+        -lc_nano
         -Wl,-Map=${PROJECT_NAME}.map,--cref
         -Wl,--gc-sections
     )
