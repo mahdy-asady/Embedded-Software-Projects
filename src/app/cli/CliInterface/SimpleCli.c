@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include "CliInterface.h"
 
-static void (*fnCommandCallBack)(uint8_t *);
-static uint8_t Command[100] = {0};
+static void (*fnCommandCallBack)(char *);
+static char Command[100] = {0};
 static int StringPosition = 0;
 
 void ReceiveCharacter(uint8_t *Char) {
-    
+
     printf("%s", Char);
     
     if(*Char == '\n') {
@@ -23,7 +23,7 @@ void ReceiveCharacter(uint8_t *Char) {
 }
 
 
-CharReceivingHook CliInterfaceInit(void (*CallBack)(uint8_t *)) {
+CharReceivingHook CliInterfaceInit(void (*CallBack)(char *)) {
     fnCommandCallBack = CallBack;
     return &ReceiveCharacter;
 }

@@ -5,7 +5,7 @@
 #include "CliInterface/CliInterface.h"
 
 
-void ReceiveCommand(uint8_t*);
+void ReceiveCommand(char*);
 void PrintLogo(void);
 
 char *Command;
@@ -28,7 +28,7 @@ int main(void)
 }
 
 // Receive User entered commands
-void ReceiveCommand(uint8_t *Char) {
+void ReceiveCommand(char *Char) {
 
     printf("%s\n", Char);
 }
