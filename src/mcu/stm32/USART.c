@@ -23,3 +23,20 @@ void USART_init_printf(void) {
     MX_USART1_UART_Init();
     RetargetInit(&huart1);
 }
+
+static uint8_t Rx_data;
+static void (*fnCallBack)(uint8_t *);
+
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 
+{
+    HAL_UART_Receive_IT(&huart1, &Rx_data, 1);
+    if(Rx_data == '\r')
+        Rx_data = '\n';
+    (*fnCallBack)(&Rx_data);
+}
+
+void USART_init_receive(void (*CallBack)(uint8_t *)) {
+    fnCallBack = CallBack;
+    HAL_UART_Receive_IT (&huart1, &Rx_data, 1);
+}

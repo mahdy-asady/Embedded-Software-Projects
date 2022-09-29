@@ -3,4 +3,5 @@
 
 void USART_init_printf(void);
 
+void USART_init_receive(void (*CallBack)(uint8_t *));
 #endif

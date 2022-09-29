@@ -1,6 +1,6 @@
 {
     "cmake.configureSettings": {
-        "PROJECT": "blink",
+        "PROJECT": "cli",
         "PROFILE": "stm32f107_72MHz",
         "BAUD": "115200",
         
