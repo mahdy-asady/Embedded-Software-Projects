@@ -15,8 +15,8 @@
         },
         {
             "type": "cmake",
-            "label": "CMake: clean rebuild",
-            "command": "cleanRebuild",
+            "label": "CMake: Build",
+            "command": "build",
             "targets": [
                 "all"
             ],
