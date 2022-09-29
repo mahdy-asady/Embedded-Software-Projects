@@ -3,18 +3,23 @@
 
 static void (*fnCommandCallBack)(uint8_t *);
 static uint8_t Command[100] = {0};
-static int index = 0;
+static int StringPosition = 0;
 
 void ReceiveCharacter(uint8_t *Char) {
+    
     printf("%s", Char);
     
     if(*Char == '\n') {
-        Command[index] = '\0';
+        Command[StringPosition] = '\0';
         (*fnCommandCallBack)(Command);
-        index = 0;
+        StringPosition = 0;
     }
-    else 
-        Command[index++] = *Char;
+    else {
+        if(*Char == 127) //backspace
+            StringPosition--;
+        else
+            Command[StringPosition++] = *Char;
+    }
 }
 
 
