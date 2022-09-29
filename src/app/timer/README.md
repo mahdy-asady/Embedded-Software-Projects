@@ -75,7 +75,9 @@ struggling with timers and printf function was hard and challenging!
 But you can find some resources here:
 1. [Using printf](https://shawnhymel.com/1873/how-to-use-printf-on-stm32/)
 2. [Using Timer Interrupts](https://www.digikey.com/en/maker/projects/getting-started-with-stm32-timers-and-timer-interrupts/d08e6493cefa486fb1e79c43c0b08cc6)
-   I strongly recommand using **General Purpose** timer for your first timer project, As I had some problem with starting Advanced timers.
+3. [Using Timer Interupts, tut2](https://microcontrollerslab.com/stm32-blue-pill-timer-interrupt-stm32cube-ide-hal-libraries/)
+
+I strongly recommand using **General Purpose** timer for your first timer project, As I had some problem with starting Advanced timers.
 ## NewLib problem:
 Compiling and running first application in stm32 was a mind blowing problem for me! I fight so many times with cmake to accept the arm compiler and liker. Some strange errors that came across compiling process even I couldn't find a stright forward answer for them. most annoying problem was linking the project using arm library!
 After some reading I started using nano.specs as linker specs for compiling the project and tada!!!! the project compiled (albeit with some transparent code warnings!).
