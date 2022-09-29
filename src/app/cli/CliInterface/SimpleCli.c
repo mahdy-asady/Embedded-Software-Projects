@@ -7,7 +7,12 @@ static int StringPosition = 0;
 
 
 void PrintLogo(void);
+void ReceiveCharacter(uint8_t*);
 
+CharReceivingHook CliInterfaceInit(void (*CallBack)(char *)) {
+    fnCommandCallBack = CallBack;
+    return &ReceiveCharacter;
+}
 
 void ReceiveCharacter(uint8_t *Char) {
 
@@ -24,12 +29,6 @@ void ReceiveCharacter(uint8_t *Char) {
         else
             Command[StringPosition++] = *Char;
     }
-}
-
-
-CharReceivingHook CliInterfaceInit(void (*CallBack)(char *)) {
-    fnCommandCallBack = CallBack;
-    return &ReceiveCharacter;
 }
 
 void PrintLogo(void) {
