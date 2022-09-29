@@ -2,6 +2,8 @@
 #include "retarget.h"
 
 UART_HandleTypeDef huart1;
+static uint8_t ReceivedChar;
+static void (*fnCallBack)(uint8_t *);
 
 static void MX_USART1_UART_Init(void)
 {
@@ -24,19 +26,15 @@ void USART_init_printf(void) {
     RetargetInit(&huart1);
 }
 
-static uint8_t Rx_data;
-static void (*fnCallBack)(uint8_t *);
-
-
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 
 {
-    HAL_UART_Receive_IT(&huart1, &Rx_data, 1);
-    if(Rx_data == '\r')
-        Rx_data = '\n';
-    (*fnCallBack)(&Rx_data);
+    HAL_UART_Receive_IT(&huart1, &ReceivedChar, 1);
+    if(ReceivedChar == '\r')
+        ReceivedChar = '\n';
+    (*fnCallBack)(&ReceivedChar);
 }
 
 void USART_init_receive(void (*CallBack)(uint8_t *)) {
     fnCallBack = CallBack;
-    HAL_UART_Receive_IT (&huart1, &Rx_data, 1);
+    HAL_UART_Receive_IT (&huart1, &ReceivedChar, 1);
 }
