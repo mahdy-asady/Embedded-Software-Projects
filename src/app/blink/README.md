@@ -106,6 +106,37 @@ Note that I used **Ubuntu** as my OS, so all commands here are Ubuntu commands.
     2.  Hit **Ctrl+Shift+B** or click **Build & Flash** in the status bar.
     3.  Congratulations! you have made your fist embedded application!
 
-**Preview:**
+**Preview**:
 
 ![](video.gif)
+
+# Migration to STM32:
+So my challenge was mixing AVR blink project with STM32 version as the code should be compiled on both without any code change!
+
+## Hardware Requirements:
+1. STM32 Development Board (I used a board based on STM32F107VC)
+2. STM32 Debugger & Programmer (ST-LINK or J-Link)
+
+## Software Requirements:
+1. VSCode + Extensions(C/C++, CMake, Commands, Cortex-Debug)
+2. STM32CubeMX
+3. CMake
+4. arm-gcc
+5. Jlink/stlink programmer software
+
+## Running steps:
+1. **Setup Vscode**:
+   You can use some tutorials on the web. I suggest [this one](https://prog.world/configuring-vscode-for-stm32-programming-in-linux-and-not-only-linux/).
+2. **Create STM32CubeMX Project**:
+   Project creation in STM32CubeMX is not so hard! Click proper pin and select **GPIO_Output** for enabling a pin as output pin.
+   On the Clock Configuration tab you can calculate divider and multiplier values for your desired frequency or let CubeMX Calculate it for you. for the second option just type your desired frequency in **HCLK (MHz)** field and hit enter!
+   Save your project and hit **GENERATE CODE** on top right corner of application. 
+3. **Mixing Codes**:
+   Now you have your first ready to code stm32 project!
+   File structure of this project is not suitable for merging with my previous projects so I changed it! also note that compiling and linking file inclusion will be checked on cmake!
+4. **Profile Selection**:
+   I added a **PROFILE** setting to settings.js, so then created a list of hardware profiles there. Now based on hardware and project i want to build just will update this file and cheers!
+
+**Preview**:
+
+![](video2.gif)
