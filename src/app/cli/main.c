@@ -3,34 +3,18 @@
 #include "USART.h"
 
 #include "CliInterface/CliInterface.h"
+#include "CommandInterpreter/CommandInterpreter.h"
 
-
-void ReceiveCommand(char*);
 void PrintLogo(void);
-
-char *Command;
 
 int main(void)
 {
     mcuInit();
     USART_init_printf();
-    USART_init_receive(CliInterfaceInit(&ReceiveCommand));
+    USART_init_receive(CliInterfaceInit(&RunCommand));
     PrintLogo();
     
-
-
-
-
-
-
-    
     while(1);
-}
-
-// Receive User entered commands
-void ReceiveCommand(char *Char) {
-
-    printf("%s\n", Char);
 }
 
 void PrintLogo(void) {

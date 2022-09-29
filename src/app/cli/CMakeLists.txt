@@ -9,6 +9,7 @@ if( MCU STREQUAL "cortex-m3" )
 
     set(INC_FILES main.c
         CliInterface/SimpleCli.c
+        CommandInterpreter/CommandInterpreter.c
         ../../mcu/stm32/GPIO.c
         ../../mcu/stm32/stm32f1xx_it.c
         ../../mcu/stm32/stm32f1xx_hal_msp.c
