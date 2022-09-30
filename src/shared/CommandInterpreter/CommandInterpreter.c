@@ -149,6 +149,21 @@ void CommandsRun(char *Command) {
     free(SubCommands);
 }
 
+
+void printAvailableCommands(CommandsNode *BaseNode, char *PrependText) {
+    while(BaseNode) {
+        if(BaseNode->Hook != NULL)
+            printf("%s%s%s\n", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
+        if(BaseNode->ChildNode != NULL) {
+            char tmpPrepend[strlen(PrependText) + strlen(BaseNode->CommandText) + 1];
+            sprintf(tmpPrepend, "%s%s%s", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
+            printAvailableCommands(BaseNode->ChildNode, tmpPrepend);
+        }
+        BaseNode = BaseNode->NextNode;
+    }
+}
+
 void CommandsHelp(char** CommandParams, char* HookParams) {
-    printf("Help goes here!\n");
+    printf("Available Commands:\n");
+    printAvailableCommands(RootNode->ChildNode, "");
 }
