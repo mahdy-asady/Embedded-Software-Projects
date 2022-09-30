@@ -9,7 +9,9 @@ int main(void)
 {
     mcuInit();
     USART_init_printf();
-    USART_init_receive(CliInterfaceInit(&RunCommand));
+    voidFunctionPointer1ParamCharPointer CommandRunner = CommandsInit();
+    voidFunctionPointer1ParamCharPointer UartReceiver = CliInterfaceInit(CommandRunner);
+    USART_init_receive(UartReceiver);
     
     while(1);
 }

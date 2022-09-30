@@ -1,6 +1,7 @@
 #ifndef __COMMAND_INTERPRETER_h__
 #define __COMMAND_INTERPRETER_h__
+#include "FunctionPointers.h"
 
-void RunCommand(char *Command);
+voidFunctionPointer1ParamCharPointer CommandsInit(void);
 
 #endif
