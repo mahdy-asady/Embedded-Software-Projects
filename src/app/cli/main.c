@@ -10,7 +10,6 @@ int main(void)
     mcuInit();
     USART_init_printf();
     USART_init_receive(CliInterfaceInit(&RunCommand));
-    PrintLogo();
     
     while(1);
 }
