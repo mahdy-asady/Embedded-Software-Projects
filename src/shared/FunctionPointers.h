@@ -3,5 +3,5 @@
 #include <stdint.h>
 
 typedef void (*voidFunctionPointer1ParamCharPointer)(char *);
-
+typedef void (*voidFunctionPointer2ParamCharPointer)(char*, char*);
 #endif

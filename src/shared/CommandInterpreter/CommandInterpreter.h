@@ -4,4 +4,6 @@
 
 voidFunctionPointer1ParamCharPointer CommandsInit(void);
 
+void CommandsRegister(char *CommandText, voidFunctionPointer2ParamCharPointer CommandHook, char *HookParams);
+
 #endif
