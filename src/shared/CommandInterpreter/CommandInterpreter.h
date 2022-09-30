@@ -2,8 +2,8 @@
 #define __COMMAND_INTERPRETER_h__
 #include "FunctionPointers.h"
 
-voidFunctionPointer1ParamCharPointer CommandsInit(void);
+voidFnPtr1ParamCharP CommandsInit(void);
 
-void CommandsRegister(char *CommandText, voidFunctionPointer2ParamCharPointer CommandHook, char *HookParams);
+void CommandsRegister(char *CommandText, voidFnPtr2ParamCharPPCharP CommandHook, char *HookParams);
 
 #endif

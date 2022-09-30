@@ -4,5 +4,5 @@
 
 void USART_init_printf(void);
 
-void USART_init_receive(voidFunctionPointer1ParamCharPointer CallBack);
+void USART_init_receive(voidFnPtr1ParamCharP CallBack);
 #endif

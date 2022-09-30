@@ -5,7 +5,7 @@
 
 typedef struct CommandsNode {
     char* CommandText;
-    voidFunctionPointer2ParamCharPointer Hook;
+    voidFnPtr2ParamCharPPCharP Hook;
     char* HookParams;
     struct CommandsNode *ChildNode;
     struct CommandsNode *NextNode;
@@ -14,7 +14,7 @@ typedef struct CommandsNode {
 void CommandsRun(char*);
 CommandsNode *FindInChildNodes(CommandsNode *BaseNode, char **SplittedCommandText, int CreateIfNotFound, int *FoundSteps);
 char **SplitByDot(char *CommandText);
-void CommandsHelp(char* CommandParams, char* HookParams);
+void CommandsHelp(char** CommandParams, char* HookParams);
 void CreateRootNode(void);
 
 CommandsNode *RootNode;
@@ -23,14 +23,14 @@ CommandsNode *RootNode;
 
 
 
-void CommandsRegister(char *CommandText, voidFunctionPointer2ParamCharPointer CommandHook, char *HookParams) {
+void CommandsRegister(char *CommandText, voidFnPtr2ParamCharPPCharP CommandHook, char *HookParams) {
     char **SubCommands = SplitByDot(CommandText);
     CommandsNode *Node = FindInChildNodes(RootNode, SubCommands, 1, 0);
     Node->Hook = CommandHook;
     Node->HookParams = HookParams;
 }
 
-voidFunctionPointer1ParamCharPointer CommandsInit(void) {
+voidFnPtr1ParamCharP CommandsInit(void) {
     CreateRootNode();
     CommandsRegister("help", &CommandsHelp, "");
     return &CommandsRun;
@@ -128,6 +128,6 @@ void CommandsRun(char *Command) {
     free(SubCommands);
 }
 
-void CommandsHelp(char* CommandParams, char* HookParams) {
+void CommandsHelp(char** CommandParams, char* HookParams) {
     printf("Help goes here!\n");
 }

@@ -4,7 +4,7 @@
 
 UART_HandleTypeDef huart1;
 static uint8_t ReceivedChar;
-static voidFunctionPointer1ParamCharPointer fnCallBack;
+static voidFnPtr1ParamCharP fnCallBack;
 
 static void MX_USART1_UART_Init(void)
 {
@@ -35,7 +35,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     (*fnCallBack)((char*)&ReceivedChar);
 }
 
-void USART_init_receive(voidFunctionPointer1ParamCharPointer CallBack) {
+void USART_init_receive(voidFnPtr1ParamCharP CallBack) {
     fnCallBack = CallBack;
     HAL_UART_Receive_IT (&huart1, &ReceivedChar, 1);
 }

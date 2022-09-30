@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "FunctionPointers.h"
 
-static voidFunctionPointer1ParamCharPointer fnCommandCallBack;
+static voidFnPtr1ParamCharP fnCommandCallBack;
 static char Command[100] = {0};
 static int StringPosition = 0;
 
@@ -12,7 +12,7 @@ void PrintLogo(void);
 void ReceiveCharacter(char*);
 void InlineTrim(char *String);
 
-voidFunctionPointer1ParamCharPointer CliInterfaceInit(voidFunctionPointer1ParamCharPointer CallBack) {
+voidFnPtr1ParamCharP CliInterfaceInit(voidFnPtr1ParamCharP CallBack) {
     PrintLogo();
 
     fnCommandCallBack = CallBack;
