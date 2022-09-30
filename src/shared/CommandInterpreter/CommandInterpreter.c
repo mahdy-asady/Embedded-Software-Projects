@@ -25,7 +25,8 @@ CommandsNode *RootNode;
 
 void CommandsRegister(char *CommandText, voidFnPtr2ParamCharPPCharP CommandHook, char *HookParams) {
     char **SubCommands = SplitByDot(CommandText);
-    CommandsNode *Node = FindInChildNodes(RootNode, SubCommands, 1, 0);
+    int step = 0;
+    CommandsNode *Node = FindInChildNodes(RootNode, SubCommands, 1, &step);
     Node->Hook = CommandHook;
     Node->HookParams = HookParams;
 }
@@ -49,12 +50,29 @@ void CreateRootNode(void) {
 
 CommandsNode *FindInChildNodes(CommandsNode *BaseNode, char **SplittedCommandText, int CreateIfNotFound, int *FoundSteps) {
     CommandsNode *SearchNode = BaseNode->ChildNode;
+    //search within childern of BaseNode
     while(SearchNode != NULL) {
         if(strcmp(SearchNode->CommandText,*SplittedCommandText) == 0) {
-            if(((int)*(SplittedCommandText + 1)) == 0) // this is the last part in command text
-                return SearchNode;
-            else 
-                return FindInChildNodes(SearchNode, SplittedCommandText + 1, CreateIfNotFound, ++FoundSteps);
+            if(((int)*(SplittedCommandText + 1)) == 0){ // this is the last part in command text
+                if(SearchNode->Hook != NULL || CreateIfNotFound)
+                    return SearchNode;
+                else
+                    return NULL;
+            }
+            else {
+                int tmpFoundStep = *FoundSteps;
+                (*FoundSteps)++;
+                CommandsNode *ChildResult = FindInChildNodes(SearchNode, SplittedCommandText + 1, CreateIfNotFound, FoundSteps);
+                if(ChildResult != NULL || CreateIfNotFound)
+                    return ChildResult;
+                else {
+                    *FoundSteps = tmpFoundStep;
+                    if(SearchNode->Hook != NULL)
+                        return SearchNode;
+                    else
+                        return NULL;
+                }
+            }
         }
 
         if(SearchNode->NextNode != NULL)
@@ -62,7 +80,7 @@ CommandsNode *FindInChildNodes(CommandsNode *BaseNode, char **SplittedCommandTex
         else
             break;
     }
-
+    //Node Not Found
     if(CreateIfNotFound) {
         if(SearchNode == NULL) {
             BaseNode->ChildNode = (CommandsNode*)malloc(sizeof(CommandsNode));
@@ -78,8 +96,10 @@ CommandsNode *FindInChildNodes(CommandsNode *BaseNode, char **SplittedCommandTex
 
         if(((int)*(SplittedCommandText + 1)) == 0) // this is the last part in command text
             return SearchNode;
-        else
-            return FindInChildNodes(SearchNode, SplittedCommandText + 1, CreateIfNotFound, ++FoundSteps);
+        else {
+            (*FoundSteps)++;
+            return FindInChildNodes(SearchNode, SplittedCommandText + 1, CreateIfNotFound, FoundSteps);
+        }
     }
     else {
         return NULL;
@@ -119,12 +139,13 @@ char **SplitByDot(char *CommandText) {
 
 void CommandsRun(char *Command) {
     char **SubCommands = SplitByDot(Command);
-    int *ParamStep = 0;
-    CommandsNode *Node = FindInChildNodes(RootNode, SubCommands, 0, ParamStep);
+    int ParamStep = 0;
+    CommandsNode *Node = FindInChildNodes(RootNode, SubCommands, 0, &ParamStep);
     if(Node == NULL || Node->Hook == NULL)
         printf("Command Not  Found!\n");
-    else
-        (*Node->Hook)("", "");
+    else {
+        (*Node->Hook)((SubCommands + ParamStep + 1), Node->HookParams);
+    }
     free(SubCommands);
 }
 
