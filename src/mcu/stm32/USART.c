@@ -34,7 +34,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     (*fnCallBack)(&ReceivedChar);
 }
 
-void USART_init_receive(void (*CallBack)(uint8_t *)) {
+void USART_init_receive(void (*CallBack)(char *)) {
     fnCallBack = CallBack;
     HAL_UART_Receive_IT (&huart1, &ReceivedChar, 1);
 }

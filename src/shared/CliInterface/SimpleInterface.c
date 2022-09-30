@@ -7,16 +7,16 @@ static int StringPosition = 0;
 
 
 void PrintLogo(void);
-void ReceiveCharacter(uint8_t*);
+void ReceiveCharacter(char*);
 
 CharReceivingHook CliInterfaceInit(void (*CallBack)(char *)) {
     PrintLogo();
-    
+
     fnCommandCallBack = CallBack;
     return &ReceiveCharacter;
 }
 
-void ReceiveCharacter(uint8_t *Char) {
+void ReceiveCharacter(char *Char) {
 
     printf("%s", Char);
     
