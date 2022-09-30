@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "CliInterface.h"
+#include "FunctionPointers.h"
 
-static void (*fnCommandCallBack)(char *);
+static voidFunctionPointer1ParamCharPointer fnCommandCallBack;
 static char Command[100] = {0};
 static int StringPosition = 0;
 
@@ -9,7 +9,7 @@ static int StringPosition = 0;
 void PrintLogo(void);
 void ReceiveCharacter(char*);
 
-CharReceivingHook CliInterfaceInit(void (*CallBack)(char *)) {
+voidFunctionPointer1ParamCharPointer CliInterfaceInit(voidFunctionPointer1ParamCharPointer CallBack) {
     PrintLogo();
 
     fnCommandCallBack = CallBack;

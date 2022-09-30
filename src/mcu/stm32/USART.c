@@ -1,9 +1,10 @@
 #include "ErrorHandler.h"
 #include "retarget.h"
+#include "FunctionPointers.h"
 
 UART_HandleTypeDef huart1;
 static uint8_t ReceivedChar;
-static void (*fnCallBack)(uint8_t *);
+static voidFunctionPointer1ParamCharPointer fnCallBack;
 
 static void MX_USART1_UART_Init(void)
 {
@@ -31,10 +32,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     HAL_UART_Receive_IT(&huart1, &ReceivedChar, 1);
     if(ReceivedChar == '\r')
         ReceivedChar = '\n';
-    (*fnCallBack)(&ReceivedChar);
+    (*fnCallBack)((char*)&ReceivedChar);
 }
 
-void USART_init_receive(void (*CallBack)(char *)) {
+void USART_init_receive(voidFunctionPointer1ParamCharPointer CallBack) {
     fnCallBack = CallBack;
     HAL_UART_Receive_IT (&huart1, &ReceivedChar, 1);
 }
