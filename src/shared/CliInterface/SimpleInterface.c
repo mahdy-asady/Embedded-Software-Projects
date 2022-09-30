@@ -10,6 +10,8 @@ void PrintLogo(void);
 void ReceiveCharacter(uint8_t*);
 
 CharReceivingHook CliInterfaceInit(void (*CallBack)(char *)) {
+    PrintLogo();
+    
     fnCommandCallBack = CallBack;
     return &ReceiveCharacter;
 }
