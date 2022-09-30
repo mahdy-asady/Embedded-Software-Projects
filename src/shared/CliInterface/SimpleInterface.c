@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 #include "FunctionPointers.h"
 
 static voidFunctionPointer1ParamCharPointer fnCommandCallBack;
@@ -8,6 +10,7 @@ static int StringPosition = 0;
 
 void PrintLogo(void);
 void ReceiveCharacter(char*);
+void InlineTrim(char *String);
 
 voidFunctionPointer1ParamCharPointer CliInterfaceInit(voidFunctionPointer1ParamCharPointer CallBack) {
     PrintLogo();
@@ -22,7 +25,9 @@ void ReceiveCharacter(char *Char) {
     
     if(*Char == '\n') {
         Command[StringPosition] = '\0';
-        (*fnCommandCallBack)(Command);
+        InlineTrim(Command);
+        if(strcmp(Command, "") != 0)
+            (*fnCommandCallBack)(Command);
         StringPosition = 0;
     }
     else {
@@ -48,4 +53,31 @@ void PrintLogo(void) {
             "                                      \\`..\\ ||_/| _||_ \n"
             "                                       .__'|____||____|\n");
     printf("\n\nFor help type ?\n\n");
+}
+
+
+void InlineTrim(char *String)
+{
+    char *Start = String;
+    char *end;
+
+    // Trim leading space
+    while(isspace((unsigned char)*Start)) Start++;
+
+    if(*Start == 0) {  // All spaces?
+        String[0] = 0;
+        return;
+    }
+
+    // Trim trailing space
+    end = Start + strlen(Start) - 1;
+    while(end > Start && isspace((unsigned char)*end)) end--;
+
+    // Write new null terminator character
+    end[1] = '\0';
+
+    // Move Start string to start of String
+    while(*Start != 0)
+        *String++ = *Start++;
+    *String = 0;
 }
