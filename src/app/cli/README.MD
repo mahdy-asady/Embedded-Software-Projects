@@ -23,4 +23,5 @@ Note that for this project I only used STM32 hardware and it not ported to avr y
 
 **Preview**: (Click for Video!)
 
-[![](video.png)](video.mp4)
+https://user-images.githubusercontent.com/60986124/193429232-c5154ca9-df38-4d1f-a7b4-4330e1528cf2.mp4
+
