@@ -39,6 +39,10 @@ void GPIO_WritePin(PORTS PortNumber, PINS PinNumber, PinValues PinValue) {
       HAL_GPIO_WritePin(GetPort(PortNumber), PinNumber, PinValue);
 }
 
+int GPIO_ReadPin(PORTS PortNumber, PINS PinNumber) {
+    return HAL_GPIO_ReadPin(GetPort(PortNumber), PinNumber);
+}
+
 
 void GPIO_TogglePin(PORTS PortNumber, PINS PinNumber) {
     HAL_GPIO_TogglePin(GetPort(PortNumber), PinNumber);

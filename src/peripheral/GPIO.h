@@ -36,6 +36,8 @@ void GPIO_InitPin(PORTS PortNumber, PINS PinNumber, PinDirections PinDirection);
 
 void GPIO_WritePin(PORTS PortNumber, PINS PinNumber, PinValues PinValue);
 
+int GPIO_ReadPin(PORTS PortNumber, PINS PinNumber);
+
 void GPIO_TogglePin(PORTS PortNumber, PINS PinNumber);
 
 #endif
