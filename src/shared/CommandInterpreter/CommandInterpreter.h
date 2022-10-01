@@ -6,4 +6,6 @@ voidFnPtr1ParamCharP CommandsInit(void);
 
 void CommandsRegister(char *CommandText, voidFnPtr2ParamCharPPCharP CommandHook, char *HookParams);
 
+void CommandsRun(char*);
+
 #endif
