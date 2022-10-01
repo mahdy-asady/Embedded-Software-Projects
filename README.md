@@ -10,3 +10,4 @@ row | Title
 2 | Create [Timer project](src/app/timer), Use 2 level of CMake files and include theme, Create separate headers for timer interrupt and uart
 3 | Migrating [blink project](src/app/blink) to STM32.
 4 | Migrating [Timer project](src/app/timer) to STM32.
+5 | Create [CLI project](src/app/cli), A Command Line Interface for STM32 using serial connection.
