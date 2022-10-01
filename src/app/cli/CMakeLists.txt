@@ -4,13 +4,14 @@ if( MCU STREQUAL "cortex-m3" )
 
     add_definitions(-DHAL_GPIO_MODULE_ENABLED)
     add_definitions(-DHAL_UART_MODULE_ENABLED)
-#    add_definitions(-DTIM_ENABLED)
+    add_definitions(-DTIM_ENABLED)
 
 
     set(INC_FILES main.c
         ../../shared/CliInterface/SimpleInterface.c
         ../../shared/CommandInterpreter/CommandInterpreter.c
         ../../mcu/stm32/GPIOModule.c
+        ../../mcu/stm32/TimerModule.c
         ../../mcu/stm32/GPIO.c
         ../../mcu/stm32/stm32f1xx_it.c
         ../../mcu/stm32/stm32f1xx_hal_msp.c
@@ -19,7 +20,7 @@ if( MCU STREQUAL "cortex-m3" )
         ../../mcu/stm32/ErrorHandler.c
         ../../mcu/stm32/mcu.c
         ../../mcu/stm32/USART.c
-#        ../../mcu/stm32/TIMER.c
+        ../../mcu/stm32/TIMER.c
 
         ../../mcu/stm32/ErrorHandler.h
         ../../mcu/stm32/stm32f1xx_hal_conf.h

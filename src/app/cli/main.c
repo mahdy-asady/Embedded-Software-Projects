@@ -5,6 +5,7 @@
 #include "CliInterface/CliInterface.h"
 #include "CommandInterpreter/CommandInterpreter.h"
 #include "GPIOModule.h"
+#include "TimerModule.h"
 
 int main(void)
 {
@@ -13,6 +14,7 @@ int main(void)
     voidFnPtr1ParamCharP CommandRunner = CommandsInit();
     /*  Calling Modules  */
     GPIOModuleInit();
+    TimerModuleInit();
     /*  End Calling Modules */
     voidFnPtr1ParamCharP UartReceiver = CliInterfaceInit(CommandRunner);
     USART_init_receive(UartReceiver);
