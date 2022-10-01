@@ -108,28 +108,51 @@ CommandsNode *FindInChildNodes(CommandsNode *BaseNode, char **SplittedCommandTex
     return BaseNode;
 }
 
+void RemoveDoubleDot(char *String) {
+    while(*String != 0) {
+        if(*String == '.' && *(String + 1) == '.') {
+            char *Pointer = String + 1;
+            while(*Pointer != 0) {
+                *Pointer = *(Pointer + 1);
+                Pointer++;
+            }
+        }
+        String++;
+    }
+}
+
 char **SplitByDot(char *CommandText) {
     if(*CommandText == 0) return 0;
 
-    char *Start = CommandText;
+    char *IndexPointer = CommandText;
     int CommandSections = 1;
-    while(*Start != 0) {
-        if(*Start == '.') CommandSections++;
-        Start++;
+    while(*IndexPointer != 0) {
+        if(*IndexPointer == '.') {
+            if(*(IndexPointer+1) == '.')
+                IndexPointer++;
+            else
+                CommandSections++;
+        } 
+        IndexPointer++;
     }
 
-    Start = CommandText;
+    IndexPointer = CommandText;
     char *End = CommandText;
     char **SubCommands = (char**)calloc(CommandSections + 1, sizeof(char*));
     char **CommandIndex = SubCommands;
     do {
         End++;
         if(*End == '.' || *End == '\0') {
-            int strSize = End - Start;
-            *CommandIndex = (char*)calloc(strSize + 1, sizeof(char));
-            strncpy(*CommandIndex, Start, strSize);
-            Start = End + 1;
-            CommandIndex++;
+            if(*End == '.' && *(End+1) == '.')
+              End++;
+            else {  
+                int strSize = End - IndexPointer;
+                *CommandIndex = (char*)calloc(strSize + 1, sizeof(char));
+                strncpy(*CommandIndex, IndexPointer, strSize);
+                RemoveDoubleDot(*CommandIndex);
+                IndexPointer = End + 1;
+                CommandIndex++;
+            }
         }
     } while(*End != 0);
     *CommandIndex = 0;//??????????????????????
