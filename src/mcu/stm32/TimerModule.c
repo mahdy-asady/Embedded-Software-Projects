@@ -5,7 +5,8 @@
 #include "TIMER.h"
 #include "CommandInterpreter/CommandInterpreter.h"
 
-
+void TimerStart(char **CommandParams, char *HookParams);
+void TimerStop(char **CommandParams, char *HookParams);
 void TimerAdd(char **CommandParams, char *HookParams);
 void TimerDelete(char **CommandParams, char *HookParams);
 void TimerShow(char **CommandParams, char *HookParams);
@@ -28,12 +29,12 @@ TimerList *Timers, *LastTimer;
 
 void TimerModuleInit(void) {
     Timers = LastTimer = NULL;
+    CommandsRegister("timer.start", &TimerStart, "");
+    CommandsRegister("timer.stop", &TimerStop, "");
     CommandsRegister("timer.add", &TimerAdd, "");
     CommandsRegister("timer.delete", &TimerDelete, "");
     CommandsRegister("timer.list", &TimerShow, "");
     CommandsRegister("help.timer", &TimerHelp, "");
-
-    EnableTimer1(&TimerCallBack, 1);
 }
 
 void _TimerDelete(TimerList *TheTimer) {
@@ -72,14 +73,26 @@ void TimerCallBack(void) {
     }
 }
 
+void TimerStart(char **CommandParams, char *HookParams) {
+    EnableTimer1(&TimerCallBack, 1);
+}
+
+void TimerStop(char **CommandParams, char *HookParams) {
+    DisableTimer1();
+
+    TimerList *LoopTimer = Timers;
+    while(LoopTimer != NULL) {
+        LoopTimer->NextTick = 0;
+        LoopTimer = LoopTimer->NextTimer;
+    }
+}
+
 void TimerAdd(char **CommandParams, char *HookParams) {
     TimerList *NewTimer = (TimerList *)malloc(sizeof(TimerList));
     NewTimer->Name = *CommandParams;
     NewTimer->Interval = NewTimer->NextTick = atoi(*(CommandParams + 1));
     NewTimer->RepeatCount = atoi(*(CommandParams + 2));
-    NewTimer->Command = *(CommandParams + 3);
-    printf("Command: %s\n", NewTimer->Command);
-    
+    NewTimer->Command = *(CommandParams + 3);    
     NewTimer->NextTimer = NULL;
     
     if(LastTimer == NULL) {//no timer defined yet
