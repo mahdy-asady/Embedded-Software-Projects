@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "GPIO.h"
 #include "CommandInterpreter/CommandInterpreter.h"
+#include "banned.h"
 
 void PinSetOutput(char** CommandParams, char* HookParams);
 void PinSetInput(char** CommandParams, char* HookParams);

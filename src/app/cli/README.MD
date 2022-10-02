@@ -21,6 +21,9 @@ Note that for this project I only used STM32 hardware and it not ported to avr y
    commands are separated by dot between sections. for example to turn gpio PortD Pin5 on just type gpio.on.d.5(ofcourse you have to set it as output pin using gpio.output.d.5 before commiting that command).
    I will complete help section so when you type help.Command the help of that command will bring up.
 
+## Forbidden Functions:
+After building my project my mentor mentioned a narrow but important point in c development for microcontrollers! There are some functions that are forbidden!!
+You cand find a start point [here](https://wiki.openstack.org/wiki/StarlingX/Security/Banned_C_Functions). so I used [github banning header](https://github.com/git/git/blob/master/banned.h) in my files to stop using these functions and guess what! I already used them. so I replaced some of them with more safer ones.
 **Preview**: (Click for Video!)
 
 https://user-images.githubusercontent.com/60986124/193429232-c5154ca9-df38-4d1f-a7b4-4330e1528cf2.mp4

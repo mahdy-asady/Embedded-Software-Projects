@@ -4,6 +4,7 @@
 #include <string.h>
 #include "TIMER.h"
 #include "CommandInterpreter/CommandInterpreter.h"
+#include "banned.h"
 
 void TimerStart(char **CommandParams, char *HookParams);
 void TimerStop(char **CommandParams, char *HookParams);

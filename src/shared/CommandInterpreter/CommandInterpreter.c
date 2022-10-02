@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include <string.h>
 #include "FunctionPointers.h"
+#include "banned.h"
 
 typedef struct CommandsNode {
     char* CommandText;
@@ -146,9 +147,9 @@ char **SplitByDot(char *CommandText) {
             if(*End == '.' && *(End+1) == '.')
               End++;
             else {  
-                int strSize = End - IndexPointer;
-                *CommandIndex = (char*)calloc(strSize + 1, sizeof(char));
-                strncpy(*CommandIndex, IndexPointer, strSize);
+                int strSize = End - IndexPointer + 1;
+                *CommandIndex = (char*)calloc(strSize, sizeof(char));
+                strlcpy(*CommandIndex, IndexPointer, strSize);
                 RemoveDoubleDot(*CommandIndex);
                 IndexPointer = End + 1;
                 CommandIndex++;
@@ -178,8 +179,9 @@ void printAvailableCommands(CommandsNode *BaseNode, char *PrependText) {
         if(BaseNode->Hook != NULL)
             printf("\t* %s%s%s\n", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
         if(strcasecmp(BaseNode->CommandText, "help") != 0 && BaseNode->ChildNode != NULL) {
-            char tmpPrepend[strlen(PrependText) + strlen(BaseNode->CommandText) + 1];
-            sprintf(tmpPrepend, "%s%s%s", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
+            int NewPrependSize = strlen(PrependText) + strlen(BaseNode->CommandText);
+            char tmpPrepend[ NewPrependSize + 1];
+            snprintf(tmpPrepend, NewPrependSize, "%s%s%s", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
             printAvailableCommands(BaseNode->ChildNode, tmpPrepend);
         }
         BaseNode = BaseNode->NextNode;

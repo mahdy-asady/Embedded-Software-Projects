@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "FunctionPointers.h"
+#include "banned.h"
 
 static voidFnPtr1ParamCharP fnCommandCallBack;
 static char Command[100] = {0};
