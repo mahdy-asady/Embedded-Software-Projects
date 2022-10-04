@@ -6,6 +6,8 @@
 #include "CommandInterpreter/CommandInterpreter.h"
 #include "banned.h"
 
+#define MAX_TIMERS 256
+
 void TimerStart(char **CommandParams, char *HookParams);
 void TimerStop(char **CommandParams, char *HookParams);
 void TimerAdd(char **CommandParams, char *HookParams);
@@ -21,15 +23,15 @@ typedef struct TimerList {
     int RepeatCount;
     char *Command;
     int NextTick;
-    struct TimerList *NextTimer;
-    struct TimerList *PrevTimer;
 } TimerList;
 
-TimerList *Timers, *LastTimer;
-
+TimerList TimersList[MAX_TIMERS];
+int FreeTimersList [MAX_TIMERS / sizeof(int) + 1];
+#define isTimerFree(i) (FreeTimersList[i / sizeof(int)] & (1 << i % sizeof(int)))
+#define setTimerFree(i) (FreeTimersList[i / sizeof(int)] &= ~(1 << i % sizeof(int)))
+#define setTimerInUse(i) (FreeTimersList[i / sizeof(int)] |= (1 << i % sizeof(int)))
 
 void TimerModuleInit(void) {
-    Timers = LastTimer = NULL;
     CommandsRegister("timer.start", &TimerStart, "");
     CommandsRegister("timer.stop", &TimerStop, "");
     CommandsRegister("timer.add", &TimerAdd, "");
@@ -38,39 +40,26 @@ void TimerModuleInit(void) {
     CommandsRegister("help.timer", &TimerHelp, "");
 }
 
-void _TimerDelete(TimerList *TheTimer) {
-    if(LastTimer == TheTimer)
-        LastTimer = TheTimer->PrevTimer;
-
-    if(Timers == TheTimer) {
-        Timers = TheTimer->NextTimer;
-        if(Timers != NULL)
-            Timers->PrevTimer = NULL;
-    }
-    else
-        TheTimer->PrevTimer->NextTimer = TheTimer->NextTimer;
-    free(TheTimer);
+void _TimerDelete(int i) {
+    TimersList[i].Interval = TimersList[i].NextTick = 0;
+    setTimerFree(i);
 }
 
 void TimerCallBack(void) {
-    if(Timers == NULL)
-        return;
-    
-    TimerList *LoopTimer = Timers;
-    while(LoopTimer != NULL) {
-        if(--LoopTimer->NextTick == 0) {
-            LoopTimer->NextTick = LoopTimer->Interval;
-            printf("Timer '%s' Triggered!\n", LoopTimer->Name);
-            CommandsRun(LoopTimer->Command);
-            if(LoopTimer->RepeatCount != 0 && --LoopTimer->RepeatCount == 0) {
-                //delete timer
-                TimerList *NextTimer = LoopTimer->NextTimer;
-                _TimerDelete(LoopTimer);
-                LoopTimer = NextTimer;
-                continue;
+    TimerList *LoopTimer;
+    for(int i = 0; i < MAX_TIMERS; i++) {
+        if(!isTimerFree(i)) {
+            LoopTimer = &TimersList[i];
+            if(--LoopTimer->NextTick == 0) {
+                LoopTimer->NextTick = LoopTimer->Interval;
+                printf("Timer '%s' Triggered!\n", LoopTimer->Name);
+                CommandsRun(LoopTimer->Command);
+                if(LoopTimer->RepeatCount != 0 && --LoopTimer->RepeatCount == 0) {
+                    //delete timer
+                    _TimerDelete(i);
+                }
             }
         }
-        LoopTimer = LoopTimer->NextTimer;
     }
 }
 
@@ -81,67 +70,61 @@ void TimerStart(char **CommandParams, char *HookParams) {
 void TimerStop(char **CommandParams, char *HookParams) {
     DisableTimer1();
 
-    TimerList *LoopTimer = Timers;
-    while(LoopTimer != NULL) {
-        LoopTimer->NextTick = 0;
-        LoopTimer = LoopTimer->NextTimer;
+    for(int i = 0; i < MAX_TIMERS; i++) {
+        if(!isTimerFree(i)) {
+            TimersList[i].NextTick = 0;
+        }
     }
 }
 
 void TimerAdd(char **CommandParams, char *HookParams) {
-    TimerList *NewTimer = (TimerList *)malloc(sizeof(TimerList));
-    NewTimer->Name = *CommandParams;
-    NewTimer->Interval = NewTimer->NextTick = atoi(*(CommandParams + 1));
-    NewTimer->RepeatCount = atoi(*(CommandParams + 2));
-    NewTimer->Command = *(CommandParams + 3);    
-    NewTimer->NextTimer = NULL;
-    
-    if(LastTimer == NULL) {//no timer defined yet
-        NewTimer->PrevTimer = NULL;
-        Timers = LastTimer = NewTimer;
+    TimerList *NewTimer = NULL;
+    for(int i = 0; i < MAX_TIMERS; i++) {
+        if(isTimerFree(i)) {
+            setTimerInUse(i);
+            NewTimer = &TimersList[i];
+            break;
+        }
+    }
+    if(NewTimer != NULL) {
+        NewTimer->Name = *CommandParams;
+        NewTimer->Interval = NewTimer->NextTick = atoi(*(CommandParams + 1));
+        NewTimer->RepeatCount = atoi(*(CommandParams + 2));
+        NewTimer->Command = *(CommandParams + 3);    
+        
+        printf("Timer Added!\n");
     }
     else {
-        NewTimer->PrevTimer = LastTimer;
-        LastTimer->NextTimer = NewTimer;
-        LastTimer = NewTimer;
+        printf("Timer Overflow!!!\n");
     }
-    printf("Timer Added!\n");
 }
 
 void TimerDelete(char **CommandParams, char *HookParams) {
-    if(Timers == NULL) {
-        printf("No Timer to Delete!\n");
-        return;
-    }
-        
-    
-    TimerList *LoopTimer = Timers;
-    while(LoopTimer != NULL) {
-        if(strcmp(LoopTimer->Name, *CommandParams) == 0) {
-            _TimerDelete(LoopTimer);
+    for(int i = 0; i < MAX_TIMERS; i++) {
+        if(!isTimerFree(i) && strcmp(TimersList[i].Name, *CommandParams) == 0) {
+            _TimerDelete(i);
             printf("Timer Deleted!\n");
             return;
         }
-        LoopTimer = LoopTimer->NextTimer;
     }
 }
 
 void TimerShow(char **CommandParams, char *HookParams) {
-    if(Timers == NULL) {
-        printf("No Timer defined!\n");
-        return;
-    }
+//    if(FirstTimer == NULL) {
+//        printf("No Timer defined!\n");
+//        return;
+//    }
 
-    TimerList *LoopTimer = Timers;
-    while(LoopTimer != NULL) {
-        printf("Name:\t\t\t%s\n", LoopTimer->Name);
-        printf("Interval:\t\t%dms\n", LoopTimer->Interval);
-        printf("Running Command:\t%s\n", LoopTimer->Command);
-        printf("Remained Ticks:\t\t%d\n", LoopTimer->RepeatCount);
-
-        LoopTimer = LoopTimer->NextTimer;
-        if(LoopTimer != NULL)
-        printf("= = = = = = = = = = = = = = = = = = = = =\n");
+    TimerList *LoopTimer = NULL;
+    for(int i = 0; i < MAX_TIMERS; i++) {
+        if(!isTimerFree(i)) {
+            LoopTimer = &TimersList[i];
+            printf("Name:\t\t\t%s\n", LoopTimer->Name);
+            printf("Interval:\t\t%dms\n", LoopTimer->Interval);
+            printf("Running Command:\t%s\n", LoopTimer->Command);
+            printf("Remained Ticks:\t\t%d\n", LoopTimer->RepeatCount);
+            printf("= = = = = = = = = = = = = = = = = = = = =\n");
+        }
     }
 }
 
