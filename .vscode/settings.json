@@ -1,11 +1,12 @@
 {
     "cmake.configureSettings": {
         "PROJECT": "cli",
-        "PROFILE": "stm32f107_72MHz",
+        "PROFILE": "stm32f107_72MHz_STLINK",
         "BAUD": "115200",
         
         "atmega16a_16MHz": ["atmega16a", "16000000", "m16", "avrdude"],
-        "stm32f107_72MHz": ["STM32F107xC", "72000000", "cortex-m3", "JFlash"]
+        "stm32f107_72MHz_JFLASH": ["STM32F107xC", "72000000", "cortex-m3", "j-link"],
+        "stm32f107_72MHz_STLINK": ["STM32F107xC", "72000000", "cortex-m3", "st-link"]
     },
     "cmake.configureOnOpen": false,
     "files.associations": {

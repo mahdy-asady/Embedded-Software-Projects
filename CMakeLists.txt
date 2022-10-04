@@ -88,7 +88,16 @@ if( MCU STREQUAL "cortex-m3" )
     )
 
     add_custom_target(binary   ALL     ${OBJCOPY} -O binary ${PROJECT_NAME}.elf ${PROJECT_NAME}.bin && ${SIZE} --format=berkeley ${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
-    add_custom_target(flash ${FLASHER} -openprj../JFlash/${PROCESSOR}.jflash -open${PROJECT_NAME}.bin,0x8000000 -auto -startapp -exit DEPENDS binary)
+    
+    if( FLASHER STREQUAL "j-link" )
+
+        add_custom_target(flash JFlash -openprj../JFlash/${PROCESSOR}.jflash -open${PROJECT_NAME}.bin,0x8000000 -auto -startapp -exit DEPENDS binary)
+
+    elseif( FLASHER STREQUAL "st-link" )
+
+        add_custom_target(flash st-flash write ${PROJECT_NAME}.bin 0x8000000 && st-flash reset DEPENDS binary)
+
+    endif()
 
 
     target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32")
