@@ -30,4 +30,11 @@
 #undef asctime_r
 #define asctime_r(t, buf) BANNED(asctime_r)
 
+#undef malloc
+#define malloc(s) BANNED(malloc)
+#undef calloc
+#define calloc(s, c) BANNED(calloc)
+#undef free
+#define free(p) BANNED(free)
+
 #endif /* __BANNED_H__ */
