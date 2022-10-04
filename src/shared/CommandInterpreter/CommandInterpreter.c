@@ -4,6 +4,8 @@
 #include "FunctionPointers.h"
 #include "banned.h"
 
+#define MAX_NODES 256
+
 typedef struct CommandsNode {
     char* CommandText;
     voidFnPtr2ParamCharPPCharP Hook;
@@ -19,6 +21,8 @@ void CommandsHelp(char** CommandParams, char* HookParams);
 void CreateRootNode(void);
 
 CommandsNode *RootNode;
+CommandsNode NodesList[MAX_NODES];
+int FirstFreeNodeIndex = 0;
 
 
 
@@ -39,11 +43,18 @@ voidFnPtr1ParamCharP CommandsInit(void) {
 }
 
 
+CommandsNode *RegisterNewNode(void) {
+    //find first free node
+    if(FirstFreeNodeIndex < MAX_NODES)
+        return &NodesList[FirstFreeNodeIndex++];
+    else
+        return NULL;
+}
 
 
 
 void CreateRootNode(void) {
-    RootNode = (CommandsNode*)malloc(sizeof(CommandsNode));
+    RootNode = RegisterNewNode();
     RootNode->CommandText = "";
     RootNode->ChildNode = RootNode->NextNode = NULL;
     RootNode->Hook = NULL;
@@ -84,11 +95,11 @@ CommandsNode *FindInChildNodes(CommandsNode *BaseNode, char **SplittedCommandTex
     //Node Not Found
     if(CreateIfNotFound) {
         if(SearchNode == NULL) {
-            BaseNode->ChildNode = (CommandsNode*)malloc(sizeof(CommandsNode));
+            BaseNode->ChildNode = RegisterNewNode();
             SearchNode = BaseNode->ChildNode;
         }
         else {
-            SearchNode->NextNode = (CommandsNode*)malloc(sizeof(CommandsNode));
+            SearchNode->NextNode = RegisterNewNode();
             SearchNode = SearchNode->NextNode;
         }
         SearchNode->CommandText = *SplittedCommandText;
