@@ -3,5 +3,4 @@
 #include <stdint.h>
 
 typedef void (*voidFnPtr1ParamCharP)(char *);
-typedef void (*voidFnPtr2ParamCharPPCharP)(char**, char*);
 #endif
