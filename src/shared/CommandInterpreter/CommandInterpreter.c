@@ -178,9 +178,9 @@ void printAvailableCommands(CommandsNode *BaseNode, char *PrependText) {
     while(BaseNode) {
         if(BaseNode->Hook != NULL)
             printf("\t* %s%s%s\n", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
-        if(strcasecmp(BaseNode->CommandText, "help") != 0 && BaseNode->ChildNode != NULL) {
-            int NewPrependSize = strlen(PrependText) + strlen(BaseNode->CommandText);
-            char tmpPrepend[ NewPrependSize + 1];
+        if(strcmp(BaseNode->CommandText, "help") != 0 && BaseNode->ChildNode != NULL) {
+            int NewPrependSize = strlen(PrependText) + strlen(BaseNode->CommandText) + 1;
+            char tmpPrepend[ NewPrependSize];
             snprintf(tmpPrepend, NewPrependSize, "%s%s%s", PrependText, (strcmp(PrependText, "")? "." : ""), BaseNode->CommandText);
             printAvailableCommands(BaseNode->ChildNode, tmpPrepend);
         }
