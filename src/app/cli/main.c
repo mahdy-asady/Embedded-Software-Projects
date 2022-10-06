@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "mcu.h"
 #include "USART.h"
+#include "debug.h"
 
 #include "CliInterface/CliInterface.h"
 #include "CommandInterpreter/CommandInterpreter.h"
