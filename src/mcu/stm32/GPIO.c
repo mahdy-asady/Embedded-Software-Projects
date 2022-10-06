@@ -1,5 +1,6 @@
 #include "stm32f1xx_hal.h"
 #include "GPIO.h"
+#include "debug.h"
 
 static GPIO_TypeDef * GetPort(PORTS PortNumber) {
     switch (PortNumber)
@@ -14,6 +15,9 @@ static GPIO_TypeDef * GetPort(PORTS PortNumber) {
         return GPIOD;
     case PORT_E:
         return GPIOE;
+    default:
+        log_error("Wrong Port specified!\n");
+        return NULL;
     }
 }
 
