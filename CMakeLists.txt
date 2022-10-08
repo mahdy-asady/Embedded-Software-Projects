@@ -20,7 +20,7 @@ if( MCU STREQUAL "cortex-m3" )
     set(PREFIX arm-none-eabi-)
     set(CDEBUG    "-Og -g")
     set(CTUNING   "-fno-builtin -ffunction-sections -fdata-sections")
-    set(COPT      "-Os -lm")
+    set(COPT      "-O0 -lm")
     set(CMCU      "-mcpu=${MCU} -mthumb -DUSE_HAL_DRIVER")
 
 elseif( MCU STREQUAL "m16" )
