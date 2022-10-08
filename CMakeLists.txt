@@ -18,7 +18,7 @@ if( MCU STREQUAL "cortex-m3" )
     set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs -specs=nano.specs")
 
     set(PREFIX arm-none-eabi-)
-    set(CDEBUG    "-Og -g")
+    set(CDEBUG    "-Og -g -fanalyzer")
     set(CTUNING   "-fno-builtin -ffunction-sections -fdata-sections")
     set(COPT      "-O0 -lm")
     set(CMCU      "-mcpu=${MCU} -mthumb -DUSE_HAL_DRIVER")
