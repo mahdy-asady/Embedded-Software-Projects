@@ -1,6 +1,6 @@
 #include <avr/io.h>
 #include "GPIO.h"
-
+#include "debug.h"
 
 static volatile uint8_t * GetPort(PORTS PortNumber) {
     switch (PortNumber)
@@ -13,6 +13,9 @@ static volatile uint8_t * GetPort(PORTS PortNumber) {
         return &PORTC;
     case PORT_D:
         return &PORTD;
+    default:
+        log_error("Wrong Port specified!\n");
+        return NULL;
     }
 }
 
@@ -27,6 +30,9 @@ static volatile uint8_t * GetDDR(PORTS PortNumber) {
         return &DDRC;
     case PORT_D:
         return &DDRD;
+    default:
+        log_error("Wrong Port specified!\n");
+        return NULL;
     }
 }
 
