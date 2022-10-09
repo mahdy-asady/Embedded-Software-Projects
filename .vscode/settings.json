@@ -1,7 +1,7 @@
 {
     "cmake.configureSettings": {
         "PROJECT": "cli",
-        "PROFILE": "stm32f107_72MHz_JFLASH",
+        "PROFILE": "stm32f107_72MHz_STLINK",
         "BAUD": "115200",
         "LOG_LEVEL": 1, /* NONE = 0, ERROR_LEVEL = 1, WARNING_LEVEL = 2, INFO_LEVEL = 3, TRACE_LEVEL = 4 */
         

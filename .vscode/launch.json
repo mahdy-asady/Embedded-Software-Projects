@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Cortex Debug",
+            "name": "J-link Debugger",
             "cwd": "${workspaceFolder}",
             "executable": "./build/Embedded.elf",
             "request": "launch",
@@ -16,6 +16,25 @@
             "device": "STM32F107VC",
             "interface": "swd",
             "serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
+            "runToMain": true,
+            "armToolchainPath": "/opt/gcc-arm-none-eabi/bin/",
+            "svdFile": "${workspaceRoot}/STM32F107.svd",
+            "showDevDebugOutput": "raw"
+        },
+        {
+            "name": "ST-LINK Debugger",
+            "cwd": "${workspaceFolder}",
+            "executable": "./build/Embedded.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "device": "STM32F107VC",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f1x.cfg"
+              ],
+            "interface": "swd",
+            "runToEntryPoint": "main",
             "runToMain": true,
             "armToolchainPath": "/opt/gcc-arm-none-eabi/bin/",
             "svdFile": "${workspaceRoot}/STM32F107.svd",
