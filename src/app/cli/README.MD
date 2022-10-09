@@ -24,6 +24,22 @@ Note that for this project I only used STM32 hardware and it not ported to avr y
 ## Forbidden Functions:
 After building my project my mentor mentioned a narrow but important point in c development for microcontrollers! There are some functions that are forbidden!!
 You cand find a start point [here](https://wiki.openstack.org/wiki/StarlingX/Security/Banned_C_Functions). so I used [github banning header](https://github.com/git/git/blob/master/banned.h) in my files to stop using these functions and guess what! I already used them. so I replaced some of them with more safer ones.
+
+## Debugging:
+So, The biggest headache for programmers: Debugging.
+- Install **Cortex Debug** Extension in VSCode.
+- You need **System View Description** .svd file which can be downloaded from st.com's microcontroller page. Just search for your micro name and open st.com link. Then navigate to **CAD Resources** and download the file.
+- Create **launch.json** in **.vscode** folder and use my code.
+- Connect microcontroller using J-Link or ST-LINK and goto Debug panel. on the upper side of panel select proper configuration and click the green play button!
+
+Well Done!
+
+## Static Analyzers:
+I used gcc static analyzer and cppmake for analyzing my project to find hidden bugs:
+- Add **-fanalyzer** to gcc compile command.
+- Install **cppcheck** and use `➜ cppcheck src -isrc/mcu/stm32/CMSIS -isrc/mcu/stm32/STM32F1xx_HAL_Driver --enable=warning,performance,portability,information,missingInclude,style,unusedFunction --std=c99` to get the result
+
+
 **Preview**: (Click for Video!)
 
 https://user-images.githubusercontent.com/60986124/193429232-c5154ca9-df38-4d1f-a7b4-4330e1528cf2.mp4
