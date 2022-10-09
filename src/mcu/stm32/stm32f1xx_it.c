@@ -56,7 +56,10 @@
 
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim2;
+
+#ifdef HAL_UART_MODULE_ENABLED
 extern UART_HandleTypeDef huart1;
+#endif
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -219,11 +222,11 @@ void TIM2_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-
+  #ifdef HAL_UART_MODULE_ENABLED
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
+  #endif
   /* USER CODE END USART1_IRQn 1 */
 }
 
