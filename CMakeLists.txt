@@ -23,12 +23,12 @@ if( MCU STREQUAL "cortex-m3" )
 
     if( BUILD STREQUAL "release")
 
-        set(CDEBUG    "-fanalyzer")
+        set(CDEBUG    "-fanalyzer -DLOG_LEVEL=0")
         set(COPT      "-Os")
 
     elseif( BUILD STREQUAL "debug")
 
-        set(CDEBUG    "-Og -g3 -fanalyzer")
+        set(CDEBUG    "-Og -g3 -fanalyzer -DLOG_LEVEL=${LOG_LEVEL}")
         set(COPT      "")
 
     endif()
