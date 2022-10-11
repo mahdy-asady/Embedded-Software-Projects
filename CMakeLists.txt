@@ -10,7 +10,7 @@ set(PROJECT_PATH "src/app/${PROJECT}")
 
 set(CDEFS     "-DF_CPU=${F_CPU} -DBAUD=${BAUD} -D${PROCESSOR}")
 set(CSTANDARD "-std=gnu99")
-set(CWARN     "-Wall -Wstrict-prototypes -Wl,--gc-sections -Wl,--relax")
+set(CWARN     "-Wall -Wextra -Wstrict-prototypes -Wshadow -Wdouble-promotion -Wundef -fno-common -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable")
 
 if( MCU STREQUAL "cortex-m3" )
 
@@ -18,10 +18,21 @@ if( MCU STREQUAL "cortex-m3" )
     set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs -specs=nano.specs")
 
     set(PREFIX arm-none-eabi-)
-    set(CDEBUG    "-Og -g -fanalyzer")
     set(CTUNING   "-fno-builtin -ffunction-sections -fdata-sections")
-    set(COPT      "-O0 -lm")
     set(CMCU      "-mcpu=${MCU} -mthumb -DUSE_HAL_DRIVER")
+
+    if( BUILD STREQUAL "release")
+
+        set(CDEBUG    "-fanalyzer")
+        set(COPT      "-Os")
+
+    elseif( BUILD STREQUAL "debug")
+
+        set(CDEBUG    "-Og -g3 -fanalyzer")
+        set(COPT      "")
+
+    endif()
+    
 
 elseif( MCU STREQUAL "m16" )
 
@@ -78,13 +89,12 @@ if( MCU STREQUAL "cortex-m3" )
         -T../../../../src/mcu/stm32/STM32F107VCTx_FLASH.ld
         -mcpu=cortex-m3
         -mthumb
-        #-specs=nano.specs
-        #-nostdlib
         -lc
         -lm
         -lc_nano
         -Wl,-Map=${PROJECT_NAME}.map,--cref
         -Wl,--gc-sections
+        -Wl,--relax
     )
 
     add_custom_target(binary   ALL     ${OBJCOPY} -O binary ${PROJECT_NAME}.elf ${PROJECT_NAME}.bin && ${SIZE} --format=berkeley ${PROJECT_NAME}.elf DEPENDS ${PROJECT_NAME})
@@ -108,6 +118,11 @@ if( MCU STREQUAL "cortex-m3" )
 
 
 elseif( MCU STREQUAL "m16" )
+
+    target_link_options(${PROJECT_NAME} PRIVATE
+        -Wl,--gc-sections
+        -Wl,--relax
+    )
 
     # Compiling targets
     add_custom_target(strip ALL     ${STRIP} "${PROJECT_NAME}.elf" DEPENDS ${PROJECT_NAME})

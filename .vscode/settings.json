@@ -1,5 +1,6 @@
 {
     "cmake.configureSettings": {
+        "BUILD": "release", /*release OR debug*/
         "PROJECT": "cli",
         "PROFILE": "stm32f107_72MHz_STLINK",
         "BAUD": "115200",
